@@ -15,11 +15,11 @@
         "globalPrefix": "simple-user-center/v1.0"
     },
     "mysqlConfig": {
-        "host": "",
+        "host": "127.0.0.1",
         "userName": "root",
-        "password": "",
+        "password": "password",
         "dataBaseName": "b_simple_user_center",
-        "port": 7000
+        "port": 3306
     },
     "mongodbConfig": {
         "host": "127.0.0.1",
@@ -52,7 +52,7 @@
         "websocketFriendMessageSubscribe": "",
         "websocketGroupMessageQueue": ""
     },
-    "emailConfig":{
+    "emailConfig": {
         "authPass": "",
         "fromUser": "",
         "user": ""
