@@ -5,7 +5,7 @@ export class RoleApiResourceEntity {
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column({ comment: '角色id', nullable: false })
+    @Column({comment: '角色id', nullable: false})
     roleId: number;
 
     @Column({nullable: true, comment: '资源id'})

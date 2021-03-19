@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
 export class System {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 500 })
+    @Column({length: 500})
     name: string;
 
     @Column('text', {nullable: true})
@@ -23,12 +23,12 @@ export class System {
     @Column({default: 0})
     isDelete: number;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     crateTime: string;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     updateTime: string;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     deleteTime: string;
 }

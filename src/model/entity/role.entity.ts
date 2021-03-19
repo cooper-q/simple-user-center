@@ -1,37 +1,37 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Authority } from './authority.entity';
-import { User } from './user.entity';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn, OneToMany} from 'typeorm';
+import {Authority} from './authority.entity';
+import {User} from './user.entity';
 
 @Entity()
 export class Role {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ length: 500 })
-  name: string;
+    @Column({length: 500})
+    name: string;
 
-  @Column('text', {nullable: true})
-  desc: string;
+    @Column('text', {nullable: true})
+    desc: string;
 
-  @Column()
-  code: string;
+    @Column()
+    code: string;
 
-  @ManyToMany(type => Authority, authority => authority.roles)
-  @JoinTable()
-  authority: Authority[];
+    @ManyToMany(type => Authority, authority => authority.roles)
+    @JoinTable()
+    authority: Authority[];
 
-  @OneToMany(type => User, user => user.role)
-  users: User[];
+    @OneToMany(type => User, user => user.role)
+    users: User[];
 
-  @Column({default: 0})
-  isDelete: number;
+    @Column({default: 0})
+    isDelete: number;
 
-  @Column({default: '', nullable: true })
-  crateTime: string;
+    @Column({default: '', nullable: true})
+    crateTime: string;
 
-  @Column({default: '', nullable: true })
-  updateTime: string;
+    @Column({default: '', nullable: true})
+    updateTime: string;
 
-  @Column({default: '', nullable: true })
-  deleteTime: string;
+    @Column({default: '', nullable: true})
+    deleteTime: string;
 }

@@ -1,7 +1,7 @@
 import {Body, Controller, Get, Inject, Post, Query, Res, UploadedFile, UseInterceptors} from '@nestjs/common';
-import { Response } from 'express';
-import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
-import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
+import {Response} from 'express';
+import {TransformInterceptor} from '../common/shared/interceptors/transform.interceptor';
+import {LoggingInterceptor} from '../common/shared/interceptors/logging.interceptor';
 import {SystemService} from '../service/service/system.service';
 import {ApiResourceService} from '../service/service/apiResource.service';
 import {CreateApiResourceDto} from '../model/DTO/apiResource/create_apiResource.dto';
@@ -59,7 +59,7 @@ export class ApiResourceController {
     public async getApiList(@Query() params: QueryApiResourceDto): Promise<ResultData> {
         try {
             const res = await this.apiResourceService.getApiList(params);
-            return new ResultData(MessageType.GETLIST,  {data: res[0], count: res[1]}, true);
+            return new ResultData(MessageType.GETLIST, {data: res[0], count: res[1]}, true);
         } catch (e) {
             return new ResultData(MessageType.GETLIST, {data: [], count: 0}, false);
         }
@@ -73,7 +73,7 @@ export class ApiResourceController {
     public async getSystemList(@Query('name') name: string): Promise<ResultData> {
         try {
             const res = await this.apiResourceService.getSystemList(name);
-            return new ResultData(MessageType.GETLIST,  {data: res[0], count: res[1]}, true);
+            return new ResultData(MessageType.GETLIST, {data: res[0], count: res[1]}, true);
         } catch (e) {
             return new ResultData(MessageType.GETLIST, {data: [], count: 0}, false);
         }
@@ -87,7 +87,7 @@ export class ApiResourceController {
     public async getModuleBySystem(@Query('system') system: string): Promise<ResultData> {
         try {
             const res = await this.apiResourceService.getModuleBySystem(system);
-            return new ResultData(MessageType.GETLIST,  {data: res[0], count: res[1]}, true);
+            return new ResultData(MessageType.GETLIST, {data: res[0], count: res[1]}, true);
         } catch (e) {
             return new ResultData(MessageType.GETLIST, {data: [], count: 0}, false);
         }
@@ -101,9 +101,9 @@ export class ApiResourceController {
     public async deleteResource(@Body() params: DeleteApiResourceDto): Promise<ResultData> {
         try {
             await this.apiResourceService.deleteResource(params);
-            return new ResultData(MessageType.DELETE,  true);
+            return new ResultData(MessageType.DELETE, true);
         } catch (e) {
-            return new ResultData(MessageType.DELETE,  false);
+            return new ResultData(MessageType.DELETE, false);
         }
     }
 
@@ -114,7 +114,7 @@ export class ApiResourceController {
     @Post('system/unique')
     public async uniqueSystemCode(@Body('systemCode') system: string): Promise<boolean> {
         try {
-            return  await this.apiResourceService.uniqueSystemCode(system);
+            return await this.apiResourceService.uniqueSystemCode(system);
         } catch (e) {
             return false;
         }
@@ -128,7 +128,7 @@ export class ApiResourceController {
     @Post('module/unique')
     public async uniqueModuleCode(@Body('systemCode') system: string, @Body('moduleCode') module: string): Promise<boolean> {
         try {
-            return  await this.apiResourceService.uniqueModuleCode(system);
+            return await this.apiResourceService.uniqueModuleCode(system);
         } catch (e) {
             return false;
         }
@@ -162,7 +162,7 @@ export class ApiResourceController {
             res.attachment('接口资源导入模板.xlsx');
             res.send(readFileSync(filePath));
         } catch (e) {
-            return new ResultData(MessageType.FILEERROR,  false);
+            return new ResultData(MessageType.FILEERROR, false);
         }
 
     }
@@ -177,9 +177,9 @@ export class ApiResourceController {
         try {
             const column = this.apiResourceService.getColumnDatas();
             const list = await this.apiResourceService.importExcel(column, file.buffer, true, 'buffer');
-            return new ResultData(MessageType.GETLIST,  {data: [], count: list.length}, true);
+            return new ResultData(MessageType.GETLIST, {data: [], count: list.length}, true);
         } catch (e) {
-            return new ResultData(MessageType.FILEERROR,  false);
+            return new ResultData(MessageType.FILEERROR, false);
         }
 
     }
@@ -204,9 +204,9 @@ export class ApiResourceController {
     @Get('tree')
     public async getAuthorityTree(@Query('hasList') hasList: string = 'true') {
         try {
-            const { data, count, listData } = await this.apiResourceService.getAuthorityTree();
+            const {data, count, listData} = await this.apiResourceService.getAuthorityTree();
             const resData = hasList == 'true' ? {data, count, listData} : {data, count};
-            return hasList ? new ResultData(MessageType.GETLIST,  resData, true) : new ResultData(MessageType.GETLIST,  resData, true);
+            return hasList ? new ResultData(MessageType.GETLIST, resData, true) : new ResultData(MessageType.GETLIST, resData, true);
         } catch (e) {
             return {code: 200, data: [], message: e.errorMessage};
         }

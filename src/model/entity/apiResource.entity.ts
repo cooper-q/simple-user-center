@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity({name: 'api_resource'})
 export class ApiResource {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 500 })
+    @Column({length: 500})
     name: string;
 
     @Column('text', {nullable: true})
@@ -32,12 +32,12 @@ export class ApiResource {
     @Column({default: 0})
     isDelete: number;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     crateTime: string;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     updateTime: string;
 
-    @Column({default: '', nullable: true })
+    @Column({default: '', nullable: true})
     deleteTime: string;
 }

@@ -4,6 +4,7 @@ import {CommonConfigInterface} from '../../config/CommonConfigInterface';
 export class CommonConfigService {
     public readonly envConfig: CommonConfigInterface;
     private readonly processEnv: CommonConfigInterface;
+
     constructor() {
         this.processEnv = process.env as CommonConfigInterface;
         console.log(this.processEnv);
