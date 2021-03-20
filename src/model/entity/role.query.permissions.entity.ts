@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, Unique
 
 // 国家、行业 查询权限关联到角色
 
+
 @Entity({ name: 'role_query_permissions' })
 // @Unique('rciq', ['roleId', 'countyCode', 'IndustryCode', 'queryCount'])
 export class RoleQueryPermissionsEntity {
