@@ -1,14 +1,15 @@
-import {Body, Controller, Get, Headers, Inject, Post, Query, Req, UseGuards, UseInterceptors} from '@nestjs/common';
-import {TransformInterceptor} from '../common/shared/interceptors/transform.interceptor';
-import {LoggingInterceptor} from '../common/shared/interceptors/logging.interceptor';
-import {RoleService} from '../service/service/role.service';
-import {CreateRoleDto} from '../model/DTO/role/create_role.dto';
-import {UpdateRoleDto} from '../model/DTO/role/update_role.dto';
-import {QueryRoleDto} from '../model/DTO/role/query_role.dto';
-import {AddAuthDto} from '../model/DTO/role/add_auth';
-import {AddResourceRole} from '../model/DTO/apiResource/add_resource_role';
-import {MessageType, ResultData} from '../common/result/ResultData';
-import {UserService} from '../service/service/user.service';
+import { Body, Controller, Delete, Get, Headers, Inject, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
+import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
+import { RoleService } from '../service/service/role.service';
+import { CreateRoleDto } from '../model/DTO/role/create_role.dto';
+import { UpdateRoleDto } from '../model/DTO/role/update_role.dto';
+import { QueryRoleDto } from '../model/DTO/role/query_role.dto';
+import { AddAuthDto } from '../model/DTO/role/add_auth';
+import { AddResourceRole } from '../model/DTO/apiResource/add_resource_role';
+import { MessageType, ResultData } from '../common/result/ResultData';
+import { UserService } from '../service/service/user.service';
+import { AddQueryPermissionsRole } from '../model/DTO/role_query_permissions/create_role_query_permissions.dto';
 
 @Controller('role')
 export class RoleController {
@@ -26,16 +27,16 @@ export class RoleController {
         try {
             const res = await this.roleService.checkName(createUserDto.name);
             if (res) {
-                return {code: 200, message: '该角色已经存在', success: false};
+                return { code: 200, message: '该角色已经存在', success: false };
             }
         } catch (e) {
-            return {code: 200, message: e.errorMessage, success: false};
+            return { code: 200, message: e.errorMessage, success: false };
         }
         try {
             const res1: any = await this.roleService.creatRole(createUserDto);
-            return {code: 200, message: '操作成功', success: true};
+            return { code: 200, message: '操作成功', success: true };
         } catch (e) {
-            return {code: 200, message: e.errorMessage, success: false};
+            return { code: 200, message: e.errorMessage, success: false };
         }
     }
 
@@ -47,9 +48,9 @@ export class RoleController {
     public async updateRole(@Body() updateRoleDto: UpdateRoleDto) {
         try {
             const res = await this.roleService.updateRole(updateRoleDto);
-            return {code: 200, message: '更新成功', success: true};
+            return { code: 200, message: '更新成功', success: true };
         } catch (e) {
-            return {code: 400, message: e.errorMessage, success: false};
+            return { code: 400, message: e.errorMessage, success: false };
         }
     }
 
@@ -67,9 +68,9 @@ export class RoleController {
     public async getRoleInfo(@Query('id') id: any) {
         try {
             const res = await this.roleService.getRoleInfo(id);
-            return {code: 200, data: res, message: '查询成功'};
+            return { code: 200, data: res, message: '查询成功' };
         } catch (e) {
-            return {code: 200, data: [], message: '查询失败'};
+            return { code: 200, data: [], message: '查询失败' };
         }
     }
 
@@ -79,7 +80,7 @@ export class RoleController {
             const res = await this.roleService.getList(params);
             return new ResultData(MessageType.GETLIST, res, true);
         } catch (e) {
-            return {code: 200, data: [], message: '查询失败'};
+            return { code: 200, data: [], message: '查询失败' };
         }
     }
 
@@ -89,7 +90,7 @@ export class RoleController {
             const res = await this.roleService.getAllList();
             return new ResultData(MessageType.GETLIST, res, true);
         } catch (e) {
-            return {code: 200, data: [], message: '查询失败'};
+            return { code: 200, data: [], message: '查询失败' };
         }
     }
 
@@ -101,9 +102,9 @@ export class RoleController {
     public async addAuthToRole(@Body() params: AddAuthDto) {
         try {
             const res = await this.roleService.addAuthToRole(params);
-            return {code: 200, message: '操作成功', success: true};
+            return { code: 200, message: '操作成功', success: true };
         } catch (e) {
-            return {code: 200, message: e.errorMessage, success: false};
+            return { code: 200, message: e.errorMessage, success: false };
         }
     }
 
@@ -115,9 +116,9 @@ export class RoleController {
     public async addApiResourceToRole(@Body() params: AddResourceRole) {
         try {
             const res = await this.roleService.addApiResourceToRole(params);
-            return {code: 200, message: '操作成功', success: true};
+            return { code: 200, message: '操作成功', success: true };
         } catch (e) {
-            return {code: 200, message: e.errorMessage, success: false};
+            return { code: 200, message: e.errorMessage, success: false };
         }
     }
 
@@ -129,9 +130,9 @@ export class RoleController {
     public async getAuthByRole(@Query('id') id: any, @Headers('token') token: string) {
         try {
             const res = await this.roleService.getAuthByRole(id);
-            return {code: 200, data: res, message: '操作成功'};
+            return { code: 200, data: res, message: '操作成功' };
         } catch (e) {
-            return {code: 200, data: [], message: e.errorMessage};
+            return { code: 200, data: [], message: e.errorMessage };
         }
     }
 
@@ -145,7 +146,51 @@ export class RoleController {
             const res = await this.roleService.getApiAuthByRole(id);
             return new ResultData(MessageType.GETLIST, res, true);
         } catch (e) {
-            return {code: 200, data: [], message: e.errorMessage};
+            return { code: 200, data: [], message: e.errorMessage };
         }
     }
+
+    /**
+     * 查询用户条数限制
+     * @param userID
+     */
+    @Get('authQueryByRole')
+    public async getQueryPermissionsRole(@Query('userID') userID: any) {
+        console.log(2);
+        try {
+            const res = await this.roleService.getQueryPermissionsRole(userID);
+            return new ResultData(MessageType.GETLIST, res, true);
+        } catch (e) {
+            return { code: 200, data: [], message: e.errorMessage };
+        }
+    }
+
+    /**
+     * 添加查询权限
+     * @param params
+     */
+    @Post('addAuthQueryByRole')
+    public async addQueryPermissionsRole(@Body() params: AddQueryPermissionsRole) {
+        try {
+            const res = await this.roleService.addQueryPermissionsRole(params);
+            return new ResultData(MessageType.CREATE, res, true);
+        } catch (e) {
+            return { code: 200, data: [], message: e.errorMessage };
+        }
+    }
+
+    /**
+     * 删除查询权限
+     * @param params
+     */
+    @Delete('removeAuthQueryByRole')
+    public async removeQueryPermissionsRole(@Body('roleQueryPermissionIDs') roleQueryPermissionIDs: string) {
+        try {
+            const res = await this.roleService.removeQueryPermissionsRole(roleQueryPermissionIDs);
+            return new ResultData(MessageType.DELETE, res, true);
+        } catch (e) {
+            return { code: 200, data: [], message: e.errorMessage };
+        }
+    }
+
 }
